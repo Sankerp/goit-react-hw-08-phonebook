@@ -32,27 +32,15 @@ const contactsSlice = createSlice({
 
       .addCase(addContact.fulfilled, (state, action) => {
         state.isLoading = false;
-
-        // -------- 1st method --------
         state.contacts.push(action.payload);
-
-        // -------- 2nd method --------
-        // state.contacts = [action.payload, ...state.contacts];
       })
 
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.isLoading = false;
-
-        // -------- 1st method --------
         const deletedContactIndex = state.contacts.findIndex(
           contact => contact.id === action.payload.id
         );
         state.contacts.splice(deletedContactIndex, 1);
-
-        // -------- 2nd method --------
-        // state.contacts = state.contacts.filter(
-        //   contact => contact.id !== action.payload.id
-        // );
       })
 
       .addMatcher(isAnyOf(...handler('rejected')), handleRejected)
