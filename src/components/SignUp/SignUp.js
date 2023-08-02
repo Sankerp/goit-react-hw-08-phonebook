@@ -8,7 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -16,7 +16,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 function Copyright(props) {
   return (
     <Typography
-      variant="body1"
+      variant="body2"
       color="text.secondary"
       align="center"
       {...props}
@@ -37,15 +37,6 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp({ handleSubmit }) {
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     email: data.get('email'),
-  //     password: data.get('password'),
-  //   });
-  // };
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -59,7 +50,7 @@ export default function SignUp({ handleSubmit }) {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+            <VpnKeyIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
@@ -82,16 +73,6 @@ export default function SignUp({ handleSubmit }) {
                   autoFocus
                 />
               </Grid>
-              {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   required
@@ -132,7 +113,7 @@ export default function SignUp({ handleSubmit }) {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login" variant="body1">
+                <Link href="/login" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

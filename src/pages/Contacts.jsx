@@ -4,21 +4,28 @@ import Section from 'components/Section/Section';
 import ContactList from 'components/ContactList/ContactList';
 import { FilterBar } from 'components/FilterContact/FilterBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { filterContact } from 'redux/contactsReducer';
+import { filterContact } from 'redux/contacts/contactsReducer';
 import {
   addContact,
   deleteContact,
   fetchContacts,
-} from 'redux/contactsOperations';
+} from 'redux/contacts/contactsOperations';
 import Loader from 'components/Loader/Loader';
 import withAuthRedirect from 'HOC/withAuthRedirect';
+import {
+  selectContacts,
+  selectError,
+  selectFilter,
+  selectIsLoading,
+  selectUserData,
+} from 'redux/selectors';
 
 export const Contacts = () => {
-  const userData = useSelector(state => state.user.userData);
-  const filter = useSelector(state => state.phonebook.filter);
-  const selectContacts = useSelector(state => state.phonebook.contacts);
-  const isLoading = useSelector(state => state.phonebook.isLoading);
-  const error = useSelector(state => state.phonebook.error);
+  const userData = useSelector(selectUserData);
+  const filter = useSelector(selectFilter);
+  const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
 
   const dispatch = useDispatch();
 
@@ -38,9 +45,7 @@ export const Contacts = () => {
   };
 
   const onDublicate = dublicated => {
-    const dublicate = selectContacts.filter(
-      contact => contact.name === dublicated
-    );
+    const dublicate = contacts.filter(contact => contact.name === dublicated);
     return dublicate.length > 0;
   };
 
@@ -52,7 +57,7 @@ export const Contacts = () => {
     dispatch(deleteContact(contactId));
   };
 
-  const filteredContact = selectContacts.filter(contact =>
+  const filteredContact = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase().trim())
   );
 
@@ -80,65 +85,5 @@ export const Contacts = () => {
     </div>
   );
 };
-
-// import React, { useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-
-// import Loader from 'components/Loader/Loader';
-
-// import withAuthRedirect from 'HOC/withAuthRedirect';
-// import AddContactForm from 'components/Contact/Contact';
-// import { deleteContact, fetchContacts } from 'redux/contactsOperations';
-
-// const Contacts = () => {
-//   const dispatch = useDispatch();
-//   const userData = useSelector(state => state.user.userData);
-//   const contacts = useSelector(state => state.phonebook.contacts);
-//   const isLoading = useSelector(state => state.phonebook.isLoading);
-//   const error = useSelector(state => state.phonebook.error);
-
-//   useEffect(() => {
-//     if (!userData) return;
-
-//     dispatch(fetchContacts());
-//   }, [dispatch, userData]);
-
-//   const handleDeleteContact = contactId => {
-//     dispatch(deleteContact(contactId));
-//   };
-
-//   const showContacts = Array.isArray(contacts) && contacts.length > 0;
-//   const showEmptyContactsMessage =
-//     Array.isArray(contacts) && contacts.length === 0 && !isLoading;
-//   return (
-//     <div>
-//       <h1>Contacts</h1>
-//       <AddContactForm />
-//       {isLoading && <Loader />}
-//       {error && <p>{error}</p>}
-//       <ul>
-//         {showContacts &&
-//           contacts.map(contact => {
-//             return (
-//               <li key={contact.id}>
-//                 <p>
-//                   <b>{contact.name}</b> : {contact.number}{' '}
-//                   <button
-//                     disabled={isLoading}
-//                     onClick={() => handleDeleteContact(contact.id)}
-//                   >
-//                     &times;
-//                   </button>
-//                 </p>
-//               </li>
-//             );
-//           })}
-//       </ul>
-//       {showEmptyContactsMessage && (
-//         <h2>There are no contacts added to your list!</h2>
-//       )}
-//     </div>
-//   );
-// };
 
 export default withAuthRedirect(Contacts);

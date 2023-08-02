@@ -42,7 +42,7 @@ export const ContactForm = ({ onAddContact, onDublicate }) => {
         />
       </label>
       <label>
-        Number
+        Phone number
         <input
           onChange={onInputChange}
           type="tel"

@@ -1,19 +1,26 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
+import { StyledUserMenu } from './UserMenu.styled';
+import { selectUserData } from 'redux/selectors';
 
 const UserMenu = ({ handleLogout }) => {
-  const userData = useSelector(state => state.user.userData);
+  const userData = useSelector(selectUserData);
 
   return (
-    <Stack spacing={2} direction="row">
-      <p>Hello, {userData.email}!</p>
-      <Button variant="contained" onClick={handleLogout}>
+    <StyledUserMenu>
+      <p>
+        You enter as, {userData.name} on Email: {userData.email}!
+      </p>
+      <button type="button" onClick={handleLogout}>
         Log Out
-      </Button>
-    </Stack>
+      </button>
+    </StyledUserMenu>
   );
+};
+
+UserMenu.propTypes = {
+  handleLogout: PropTypes.func.isRequired,
 };
 
 export default UserMenu;
